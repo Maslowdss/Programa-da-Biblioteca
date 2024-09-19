@@ -1,7 +1,7 @@
 # Programa-da-Biblioteca
 O objetivo do projeto é desenvolver um sistema para gerenciar o catálogo de livros de uma biblioteca. O sistema deverá permitir o cadastro de novos livros, com funções para listar todos os itens disponíveis no acervo. Além disso, é essencial implementar uma funcionalidade de busca eficiente, permitindo que os usuários localizem livros por título ou autor. Também deve ser possível realizar alterações nos dados dos livros e excluir itens do catálogo quando necessário.
 
-Fase 1: Funcionalidades Básicas
+### Fase 1: Funcionalidades Básicas
 
 
 1. Main
@@ -23,7 +23,7 @@ Fase 1: Funcionalidades Básicas
 - Correção de possíveis erros
 
 
-Fase 2: Refinamentos
+### Fase 2: Refinamentos
 
 
 1. Correções e Otimização
@@ -44,7 +44,7 @@ Fase 2: Refinamentos
 - Reserva de livros: Implementar a funcionalidade de reserva de livros, caso o usuário queira pegar um livro que está emprestado
 
 
-Fase 3: Funcionalidades Avançadas (opcional)
+### Fase 3: Funcionalidades Avançadas (opcional)
 
 
 1. Interface gráfica
