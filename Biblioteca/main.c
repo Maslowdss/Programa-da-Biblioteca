@@ -171,6 +171,8 @@ void SearchBook(char name[], char author[], int category)
     }
 }
 
+
+// Ver se o livro esta emprestado
 void CheckBorrower(char name[], char author[], int category)
 {
     bool bookFound = false;  // Flag para indicar se o livro foi encontrado
@@ -208,6 +210,7 @@ void CheckBorrower(char name[], char author[], int category)
 }
 
 
+// Pedir livro emprestado
 bool BorrowBook(char name[], char author[], int category)
 {
     bool bookBorrowed = false;  // Flag para indicar se o empréstimo foi realizado
@@ -255,6 +258,65 @@ bool BorrowBook(char name[], char author[], int category)
 
     return bookBorrowed;  // Retorna verdadeiro se o empréstimo foi bem-sucedido, falso caso contrário
 }
+
+// Devolver o livro emprestado
+bool ReturnBook(char name[], char author[], int category, char username[])
+{
+    bool bookReturned = false;  // Flag para indicar se o livro foi devolvido
+    bool bookFound = false;     // Flag para indicar se o livro foi encontrado
+
+    // Verifica todos os livros cadastrados
+    for (int i = 0; i < existinBooks; i++)
+    {
+        // Verifica as condições: nome do livro, autor e categoria podem ser fornecidos individualmente ou juntos
+        bool nameMatch = (strlen(name) == 0 || strcmp(bookNameList[i], name) == 0);  // Verifica se o nome corresponde ou foi ignorado
+        bool authorMatch = (strlen(author) == 0 || strcmp(bookAuthorList[i], author) == 0);  // Verifica se o autor corresponde ou foi ignorado
+        bool categoryMatch = (category == -1 || bookCategoryList[i] == category);  // Verifica se a categoria corresponde ou foi ignorada
+
+        if (nameMatch && authorMatch && categoryMatch)
+        {
+            bookFound = true;  // Marca que o livro foi encontrado
+
+            // Verifica se o livro está emprestado
+            if (bookBorrowedStatus[i] == 1)  // Se o status for 1, o livro está emprestado
+            {
+                // Verifica se o usuário que está devolvendo é o mesmo que emprestou
+                if (strcmp(borrowedByUserList[i], username) == 0)
+                {
+                    printf("Devolução bem-sucedida: O livro '%s' foi devolvido por %s.\n", bookNameList[i], username);
+
+                    // Atualiza o status do livro para disponível
+                    bookBorrowedStatus[i] = 0;  // Marca o livro como disponível
+                    strcpy(borrowedByUserList[i], "");  // Limpa o nome do usuário que pegou o livro
+
+                    bookReturned = true;  // Marca que o livro foi devolvido
+
+                    break;  // Para o loop após encontrar e devolver o livro
+                }
+                else
+                {
+                    printf("Erro: O livro '%s' foi emprestado por %s, não por %s.\n", bookNameList[i], borrowedByUserList[i], username);
+                }
+            }
+            else
+            {
+                printf("Erro: O livro '%s' não está emprestado.\n", bookNameList[i]);
+            }
+        }
+    }
+
+    if (!bookFound)
+    {
+        printf("Erro: Nenhum livro correspondente foi encontrado.\n");
+    }
+    else if (!bookReturned)
+    {
+        printf("Erro: A devolução não pôde ser concluída.\n");
+    }
+
+    return bookReturned;  // Retorna verdadeiro se a devolução foi bem-sucedida, falso caso contrário
+}
+
 
 // Principal
 int main()
