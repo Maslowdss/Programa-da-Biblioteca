@@ -1,67 +1,72 @@
-//Bibliotecas
-#include <stdio.h>      // Para entrada e saÌda padr„o (printf, scanf, etc.)
-#include <stdlib.h>     // Para funÁıes de utilidade geral (malloc, free, rand, srand, etc.)
-#include <string.h>     // Para manipulaÁ„o de strings (strlen, strcpy, strcmp, etc.)
-#include <ctype.h>      // Para manipulaÁ„o de caracteres (isalpha, isdigit, tolower, etc.)
+// Bibliotecas
+#include <stdio.h>      // Para entrada e sa√≠da padr√£o (printf, scanf, etc.)
+#include <stdlib.h>     // Para fun√ß√µes de utilidade geral (malloc, free, rand, srand, etc.)
+#include <string.h>     // Para manipula√ß√£o de strings (strlen, strcpy, strcmp, etc.)
+#include <ctype.h>      // Para manipula√ß√£o de caracteres (isalpha, isdigit, tolower, etc.)
 #include <stdbool.h>    // Para uso do tipo booleano (true, false)
 #include <limits.h>     // Para limites de tipos inteiros (ex: INT_MAX, INT_MIN)
 #include <float.h>      // Para limites de tipos de ponto flutuante (ex: FLT_MAX, DBL_MIN)
-#include <math.h>       // Para funÁıes matem·ticas (pow, sqrt, sin, cos, etc.)
-#include <time.h>       // Para manipulaÁ„o de tempo e data (time, clock, difftime, etc.)
-#include <locale.h>     // Para suporte a configuraÁıes regionais (setlocale)
-#include <conio.h>      // Para funÁıes de console especÌficas do MS-DOS (getch, clrscr, etc.)
-#include <windows.h>    // Para funÁıes especÌficas do Windows (Sleep, API do Windows)
-#include <errno.h>      // Para tratamento de erros (define macros para cÛdigos de erro)
+#include <math.h>       // Para fun√ß√µes matem√°ticas (pow, sqrt, sin, cos, etc.)
+#include <time.h>       // Para manipula√ß√£o de tempo e data (time, clock, difftime, etc.)
+#include <locale.h>     // Para suporte a configura√ß√µes regionais (setlocale)
+#include <conio.h>      // Para fun√ß√µes de console espec√≠ficas do MS-DOS (getch, clrscr, etc.)
+#include <windows.h>    // Para fun√ß√µes espec√≠ficas do Windows (Sleep, API do Windows)
+#include <errno.h>      // Para tratamento de erros (define macros para c√≥digos de erro)
 
 
 // Constantes Globais
-#define CONSTANT 0    // DefiniÁ„o de uma constante global. Atualmente, n„o possui funcionalidade atribuÌda.
+#define CONSTANT 0    // Defini√ß√£o de uma constante global. Atualmente, n√£o possui funcionalidade atribu√≠da.
 
 
-// Vari·veis Globais
-// As vari·veis padr„o/default s„o utilizadas para evitar a criaÁ„o excessiva de vari·veis ao longo do programa.
-// Elas s„o projetadas para usos tempor·rios e podem perder seu valor logo apÛs a utilizaÁ„o.
-bool defaultStatusFlag = true;     // Indica o estado atual de uma condiÁ„o qualquer (pode ser login, autenticaÁ„o, etc.)
-int defaultInteger = 0;            // Inteiro padr„o utilizado como valor inicial
-float defaultFloat = 0;            // Float padr„o utilizado como valor inicial
-char defaultCharacter = 'a';       // Caractere padr„o utilizado como valor inicial
+// Vari√°veis Globais
+// As vari√°veis padr√£o/default s√£o utilizadas para evitar a cria√ß√£o excessiva de vari√°veis ao longo do programa.
+// Elas s√£o projetadas para usos tempor√°rios e podem perder seu valor logo ap√≥s a utiliza√ß√£o.
+bool defaultStatusFlag = true;     // Indica o estado atual de uma condi√ß√£o qualquer (pode ser login, autentica√ß√£o, etc.)
+int defaultInteger = 0;            // Inteiro padr√£o utilizado como valor inicial
+float defaultFloat = 0;            // Float padr√£o utilizado como valor inicial
+char defaultCharacter = 'a';       // Caractere padr√£o utilizado como valor inicial
 char defaultStringVector[0];       // Vetor para armazenar uma string
 char defaultStringMatrix[0][0];    // Matriz de caracteres para armazenamento de dados bidimensionais
 
-int counterInfiniteLoop = 0;       // Contador que limita o n˙mero de iteraÁıes de um loop
+int counterInfiniteLoop = 0;       // Contador que limita o n√∫mero de itera√ß√µes de um loop
 
-char userLogin[12];                // Armazena o login do usu·rio
-char userPassword[12];             // Armazena a senha do usu·rio
-char userCategory[12];             // Informa a categorÌa do usu·rio
+char userLogin[12];                // Armazena o login do usu√°rio
+char userPassword[12];             // Armazena a senha do usu√°rio
+char userCategory[12];             // Informa a categor√≠a do usu√°rio
 
-char loginList[0][12];             // Lista de logins de atÈ 0 usu·rios, com 11 caracteres cada
+char loginList[0][12];             // Lista de logins de at√© 0 usu√°rios, com 11 caracteres cada
 char passwordList[0][12];          // Lista de senhas correspondentes, com 11 caracteres cada
-char userCategoryList[0][12];      // Lista de categorias correspondentes a cada usu·rio
-int existingAccounts = 0;          // Contador para o n˙mero de usu·rios registrados
+char userCategoryList[0][12];      // Lista de categorias correspondentes a cada usu√°rio
+int existingAccounts = 0;          // Contador para o n√∫mero de usu√°rios registrados
 
-char bookName[22];                 // Armazena o nome de um livro, com atÈ 21 caracteres
-char bookAuthor[22];               // Armazena o nome do autor do livro, com atÈ 21 caracteres
-char bookCategory[22];             // Armazena a categoria do livro, com atÈ 21 caracteres
+char bookName[22];                 // Armazena o nome de um livro, com at√© 21 caracteres
+char bookAuthor[22];               // Armazena o nome do autor do livro, com at√© 21 caracteres
+int bookCategory;                  // Armazena a categoria do livro, com at√© 21 caracteres
 
-char bookNameList[0][22];          // Lista de nomes de atÈ 0 livros, cada um com atÈ 21 caracteres
-char bookAuthorList[0][22];        // Lista de autores correspondentes aos livros, com atÈ 21 caracteres cada
-char bookCategoryList[0][22];      // Lista de categorias correspondentes aos livros, com atÈ 21 caracteres cada
+char bookNameList[0][22];          // Lista de nomes de at√© 0 livros, cada um com at√© 21 caracteres
+char bookAuthorList[0][22];        // Lista de autores correspondentes aos livros, com at√© 21 caracteres cada
+int bookCategoryList[0];           // Lista de categorias correspondentes aos livros, com at√© 21 caracteres cada
 int existinBooks = 0;              // Contador para a quantidade de livros cadastrados
 
 
-// Limpa o buffer de entrada, descartando todos os caracteres atÈ a nova linha ou EOF
+int bookBorrowedStatus[100];       // Lista global para indicar se o livro est√° emprestado (0 = n√£o, 1 = sim)
+char borrowedByUserList[100][12];  // Lista global para armazenar o nome do usu√°rio que pegou o livro emprestado (m√°x. 100 livros e 11 caracteres por nome)
+
+
+
+// Limpa o buffer de entrada, descartando todos os caracteres at√© a nova linha ou EOF
 void ClearBuffer()
 {
-    int defaultInteger = 1;         // Vari·vel para armazenar os caracteres lidos do buffer
-    int counterInfiniteLoop = 0;    // Conta atÈ chegar em 100000, se isso acontecer ele cancela o loop while
+    int defaultInteger = 1;         // Vari√°vel para armazenar os caracteres lidos do buffer
+    int counterInfiniteLoop = 0;    // Conta at√© chegar em 100000, se isso acontecer ele cancela o loop while
 
     while(defaultInteger != '\n' && defaultInteger != EOF)
     {
-        defaultInteger = getchar();    // LÍ caracteres do buffer atÈ encontrar uma nova linha ou o final do arquivo
+        defaultInteger = getchar();    // L√™ caracteres do buffer at√© encontrar uma nova linha ou o final do arquivo
 
         counterInfiniteLoop++;
 
-        //Se o loop while atingir 1000 interaÁıes, ele ser· interrompido, permitindo que o programa continue sem erros.
+        // Se o loop while atingir 1000 intera√ß√µes, ele ser√° interrompido, permitindo que o programa continue sem erros.
         if(1000 <= counterInfiniteLoop)
         {
             counterInfiniteLoop=0;
@@ -75,32 +80,32 @@ void ClearBuffer()
 
 
 // Imprime cada caractere da string com um tempo de atraso especificado em Milissegundos.
-// Permite personalizaÁ„o da string de finalizaÁ„o. Use "\n" para pular linha e "" ou '\0' para fazer nada.
+// Permite personaliza√ß√£o da string de finaliza√ß√£o. Use "\n" para pular linha e "" ou '\0' para fazer nada.
 void PrintWithDelay(const char defaultStringVector[], int delay, char endChar[])
 {
-    if (defaultStringVector == NULL)    // Verifica se o vetor de caracteres n„o est· vazio
+    if (defaultStringVector == NULL)    // Verifica se o vetor de caracteres n√£o est√° vazio
     {
-        printf("Erro: O vetor de caracteres fornecido para a funÁ„o 'PrintWithDelay' È inv·lido.\n");
-        return;    // Retorna se a entrada for inv·lida
+        printf("Erro: O vetor de caracteres fornecido para a fun√ß√£o 'PrintWithDelay' √© inv√°lido.\n");
+        return;    // Retorna se a entrada for inv√°lida
     }
-    else if (delay < 0)    // Verifica se o delay È negativo
+    else if (delay < 0)    // Verifica se o delay √© negativo
     {
-        printf("Erro: O valor de delay fornecido para a funÁ„o 'PrintWithDelay' n„o pode ser negativo.\n");
+        printf("Erro: O valor de delay fornecido para a fun√ß√£o 'PrintWithDelay' n√£o pode ser negativo.\n");
         return;
     }
 
-    int length = strlen(defaultStringVector);    // ObtÈm o comprimento da string
+    int length = strlen(defaultStringVector);    // Obt√©m o comprimento da string
 
     for (int i = 0; i < length; i++)
     {
         printf("%c", defaultStringVector[i]);    // Imprime o caractere atual
         fflush(stdout);                          // Garante que o caractere seja exibido imediatamente
-        Sleep(delay);                            // Pausa a execuÁ„o pelo tempo especificado
+        Sleep(delay);                            // Pausa a execu√ß√£o pelo tempo especificado
     }
 
     if (endChar != NULL)
     {
-        printf("%s", endChar);    // Imprime a string de finalizaÁ„o
+        printf("%s", endChar);    // Imprime a string de finaliza√ß√£o
         fflush(stdout);
     }
 
@@ -109,20 +114,20 @@ void PrintWithDelay(const char defaultStringVector[], int delay, char endChar[])
 
 
 // Muda a cor do texto no console.
-// Par‚metro: color - valor WORD representando a cor desejada (0 a 15).
-// Utilize um n˙mero entre 0 e 15 para trocar a cor do texto. O valor 7 È branco.
+// Par√¢metro: color - valor WORD representando a cor desejada (0 a 15).
+// Utilize um n√∫mero entre 0 e 15 para trocar a cor do texto. O valor 7 √© branco.
 void SetColor(WORD color)
 {
-    // Verifica se o valor de cor est· dentro do intervalo permitido
+    // Verifica se o valor de cor est√° dentro do intervalo permitido
     if (color < 0 || color > 15)
     {
         printf("Erro: O valor da cor deve estar entre 0 e 15.\n");
         return;
     }
 
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);    // ObtÈm o identificador do console padr„o.
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);    // Obt√©m o identificador do console padr√£o.
 
-    // Verifica se o handle È v·lido.
+    // Verifica se o handle √© v√°lido.
     if (hConsole == INVALID_HANDLE_VALUE)
     {
         printf("Erro: falha ao obter o identificador do console.\n");
@@ -134,14 +139,131 @@ void SetColor(WORD color)
     return;
 }
 
+//Buscar Livro
+void SearchBook(char name[], char author[], int category)
+{
+    bool bookFound = false;  // Flag para indicar se algum livro foi encontrado
+
+    // Verifica todos os livros cadastrados
+    for (int i = 0; i < existinBooks; i++)
+    {
+        // Verifica as condi√ß√µes: nome do livro, autor e categoria podem ser fornecidos individualmente ou juntos.
+        bool nameMatch = (strlen(name) == 0 || strcmp(bookNameList[i], name) == 0);  // Verifica se o nome corresponde ou se foi ignorado
+        bool authorMatch = (strlen(author) == 0 || strcmp(bookAuthorList[i], author) == 0);  // Verifica se o autor corresponde ou se foi ignorado
+        bool categoryMatch = (category == -1 || bookCategoryList[i] == category);  // Verifica se a categoria corresponde ou se foi ignorada
+
+        // Se algum dos crit√©rios for fornecido e corresponder, o livro √© considerado um poss√≠vel resultado
+        if (nameMatch && authorMatch && categoryMatch)
+        {
+            // Exibe as informa√ß√µes do livro encontrado
+            printf("Livro Encontrado: \n");
+            printf("Nome: %s\n", bookNameList[i]);
+            printf("Autor: %s\n", bookAuthorList[i]);
+            printf("Categoria: %d\n\n", bookCategoryList[i]);
+            bookFound = true;  // Marca que ao menos um livro foi encontrado
+        }
+    }
+
+    // Se nenhum livro foi encontrado, exibe uma mensagem
+    if (!bookFound)
+    {
+        printf("Nenhum livro correspondente foi encontrado.\n");
+    }
+}
+
+void CheckBorrower(char name[], char author[], int category)
+{
+    bool bookFound = false;  // Flag para indicar se o livro foi encontrado
+
+    // Verifica todos os livros cadastrados
+    for (int i = 0; i < existinBooks; i++)
+    {
+        // Verifica as condi√ß√µes: nome do livro, autor e categoria podem ser fornecidos individualmente ou juntos
+        bool nameMatch = (strlen(name) == 0 || strcmp(bookNameList[i], name) == 0);  // Verifica se o nome corresponde ou foi ignorado
+        bool authorMatch = (strlen(author) == 0 || strcmp(bookAuthorList[i], author) == 0);  // Verifica se o autor corresponde ou foi ignorado
+        bool categoryMatch = (category == -1 || bookCategoryList[i] == category);  // Verifica se a categoria corresponde ou foi ignorada
+
+        if (nameMatch && authorMatch && categoryMatch)
+        {
+            bookFound = true;  // Marca que o livro foi encontrado
+
+            // Verifica se o livro est√° emprestado
+            if (bookBorrowedStatus[i] == 1)  // Se o status for 1, o livro est√° emprestado
+            {
+                printf("O livro '%s' foi emprestado por: %s\n", bookNameList[i], borrowedByUserList[i]);
+            }
+            else
+            {
+                printf("O livro '%s' est√° dispon√≠vel.\n", bookNameList[i]);
+            }
+
+            break;  // Para a busca ap√≥s encontrar o livro
+        }
+    }
+
+    if (!bookFound)
+    {
+        printf("Erro: Nenhum livro correspondente foi encontrado.\n");
+    }
+}
+
+
+bool BorrowBook(char name[], char author[], int category)
+{
+    bool bookBorrowed = false;  // Flag para indicar se o empr√©stimo foi realizado
+    bool bookFound = false;     // Flag para indicar se algum livro foi encontrado
+
+    // Verifica todos os livros cadastrados
+    for (int i = 0; i < existinBooks; i++)
+    {
+        // Verifica as condi√ß√µes: nome do livro, autor e categoria podem ser fornecidos individualmente ou juntos
+        bool nameMatch = (strlen(name) == 0 || strcmp(bookNameList[i], name) == 0);  // Verifica se o nome corresponde ou foi ignorado
+        bool authorMatch = (strlen(author) == 0 || strcmp(bookAuthorList[i], author) == 0);  // Verifica se o autor corresponde ou foi ignorado
+        bool categoryMatch = (category == -1 || bookCategoryList[i] == category);  // Verifica se a categoria corresponde ou foi ignorada
+
+        // Se algum dos crit√©rios fornecidos corresponder, o livro √© considerado um poss√≠vel resultado
+        if (nameMatch && authorMatch && categoryMatch)
+        {
+            bookFound = true;  // Marca que ao menos um livro foi encontrado
+
+            // Verifica a disponibilidade do livro
+            if (bookBorrowedStatus[i] == 0)  // Se o status do livro for 0, est√° dispon√≠vel para empr√©stimo
+            {
+                printf("Empr√©stimo realizado com sucesso para o livro: %s, Autor: %s\n", bookNameList[i], bookAuthorList[i]);
+
+                // Atualiza o status do livro para "emprestado"
+                bookBorrowedStatus[i] = 1;  // Marca o livro como emprestado
+                bookBorrowed = true;  // Marca que o empr√©stimo foi realizado
+
+                break;  // Para o loop ap√≥s encontrar e emprestar o livro
+            }
+            else
+            {
+                printf("Erro: O livro '%s' j√° est√° emprestado.\n", bookNameList[i]);
+            }
+        }
+    }
+
+    if (!bookFound)
+    {
+        printf("Erro: Nenhum livro correspondente foi encontrado.\n");
+    }
+    else if (!bookBorrowed)
+    {
+        printf("Erro: O livro j√° foi emprestado.\n");
+    }
+
+    return bookBorrowed;  // Retorna verdadeiro se o empr√©stimo foi bem-sucedido, falso caso contr√°rio
+}
 
 // Principal
 int main()
 {
-    // ConfiguraÁıes Iniciais
-    srand(time(NULL));                           // Inicializa a semente para geraÁ„o de n˙meros aleatÛrios
-    setlocale(LC_CTYPE, "Portuguese_Brazil");    // Configura a acentuaÁ„o e caracteres especiais em portuguÍs
-    SetColor(15);                                // Define a cor do texto para branco brilhante (gostei dela)
+    // Configura√ß√µes Iniciais
+    srand(time(NULL));                           // Inicializa a semente para gera√ß√£o de n√∫meros aleat√≥rios
+    setlocale(LC_CTYPE, "Portuguese_Brazil");    // Configura a acentua√ß√£o e caracteres especiais em portugu√™s
+    SetColor(15);                                // Define a cor do texto para branco brilhante
 
     return 0;    // Finaliza o programa
 }
+
