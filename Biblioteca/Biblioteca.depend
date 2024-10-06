@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1726919110 source:d:\documents\c_proj\programa-da-biblioteca\biblioteca\main.c
+
+1726920281 source:d:\documents\c_proj\programa-da-biblioteca\biblioteca\template.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<conio.h>
+
