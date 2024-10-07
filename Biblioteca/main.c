@@ -16,6 +16,7 @@
 
 // Constantes Globais
 #define CONSTANT 0    // Definição de uma constante global. Atualmente, não possui funcionalidade atribuída.
+#define MAXLINE 100
 
 
 // Variáveis Globais
@@ -39,19 +40,237 @@ char passwordList[0][12];          // Lista de senhas correspondentes, com 11 ca
 char userCategoryList[0][12];      // Lista de categorias correspondentes a cada usuário
 int existingAccounts = 0;          // Contador para o número de usuários registrados
 
-char bookName[22];                 // Armazena o nome de um livro, com até 21 caracteres
-char bookAuthor[22];               // Armazena o nome do autor do livro, com até 21 caracteres
-int bookCategory;                  // Armazena a categoria do livro, com até 21 caracteres
+char bookName[30];                 // Armazena o nome de um livro, com até 21 caracteres
+char bookAuthor[30];               // Armazena o nome do autor do livro, com até 21 caracteres
+char bookCategory[30];                  // Armazena a categoria do livro, com até 21 caracteres
+int bookQuant;
 
-char bookNameList[0][22];          // Lista de nomes de até 0 livros, cada um com até 21 caracteres
-char bookAuthorList[0][22];        // Lista de autores correspondentes aos livros, com até 21 caracteres cada
-int bookCategoryList[0];           // Lista de categorias correspondentes aos livros, com até 21 caracteres cada
+char bookNameList[MAXLINE][30] = {"MATEMATICA","MATEMATICA"};          // Lista de nomes de até 0 livros, cada um com até 21 caracteres
+char bookAuthorList[MAXLINE][30] = {"CALCULO","CALCULO"};        // Lista de autores correspondentes aos livros, com até 21 caracteres cada
+char bookCategoryList[MAXLINE][30] = {"PORTUGUES","PORTUGUES"};           // Lista de categorias correspondentes aos livros, com até 21 caracteres cada
+int bookQuantList[MAXLINE]= {10, 10};               // Lista da Quantidade existende de livros
 int existinBooks = 0;              // Contador para a quantidade de livros cadastrados
 
 
 int bookBorrowedStatus[100];       // Lista global para indicar se o livro está emprestado (0 = não, 1 = sim)
 char borrowedByUserList[100][12];  // Lista global para armazenar o nome do usuário que pegou o livro emprestado (máx. 100 livros e 11 caracteres por nome)
 
+//Variáveis auxiliares
+int i,j,k;
+char ch;
+
+
+//Interface provisória [ALTERE ASSIM QUE POSSÍVEL!!!!!]
+//
+//   Implementada apenas para testes das funcionalidades
+//   das matrizes
+//
+
+void OperacionalSpaceMenu()
+{
+    int intMenu;
+    printf("Escolha a função desejada\n\n"
+           "1 - Listagem dos Livros\n"
+           "2 - Adicionar Livro\n"
+           "3 - Remover Livro\n"
+           "4 - Editar Livro\n"
+           "\n\n[Digite apenas números...]"
+          );
+    scanf("%d", &intMenu);
+    system("CLS");
+
+    switch(intMenu)
+    {
+        case 1:
+            ListAll();
+            return;
+        case 2:
+            AddBook();
+            return;
+        case 3:
+            RemoveBook();
+            return;
+        case 4:
+            EditBook();
+            return;
+        default:
+            PrintWithDelay("\nOpção Inválida...",100,"");
+            system("PAUSE");
+            return;
+    }
+}
+
+//Operações nas matrizes
+void ListAll() //Lista todos os livros válidos
+{
+    existinBooks = 0;
+    for(i=0; i<MAXLINE; i++)
+    {
+        if(strlen(bookNameList[i])!=0)
+        {
+            printf("%.3d || %s || %s || %s || %3d\n",i+1, bookNameList[i], bookAuthorList[i], bookCategoryList[i], bookQuantList[i]);
+            existinBooks++;
+        }
+    }
+    printf("Total de Livros: %d", existinBooks);
+    printf("\n");
+    system("PAUSE");
+    return;
+}
+
+void AddBook() //Adiciona livros
+{
+    for(i=0; i<MAXLINE; i++)
+    {
+        if(strlen(bookNameList[i]) == 0) //Procura o primeiro endereço vazio na Matriz
+        {
+            //Adiciona o livro na matriz
+            j=0;
+            printf("\nNome do livro: ");
+            while(((ch = getche()) != '\r') && (j<sizeof(bookName)-1))
+            {
+                bookNameList[i][j] = ch;
+                j++;
+            }
+            //Adiciona o autor na matriz
+            j=0;
+            printf("\nNome do autor: ");
+            while(((ch = getche()) != '\r') && (j<sizeof(bookAuthor)-1))
+            {
+                bookAuthorList[i][j] = ch;
+                j++;
+            }
+            //Adiciona a categoria na matriz
+            j=0;
+            printf("\nCategoria: ");
+            while(((ch = getche()) != '\r') && (j<sizeof(bookAuthor)-1))
+            {
+                bookCategoryList[i][j] = ch;
+                j++;
+            }
+            //Adiciona a quantidade de livros cadastrados
+            printf("\nQuantidade: ");
+            scanf("%d", &bookQuant);
+            bookQuantList[i] = bookQuant;
+
+            return;
+        }
+    }
+    return;
+}
+
+void RemoveBook() // Anula elementos da Coluna
+{
+    int bookId;
+    printf("\nDigite o ID para remover: ");
+    scanf("%d", &bookId);
+
+    for(i=0; i<MAXLINE; i++)
+    {
+        if(i == bookId-1)
+        {
+            printf("\n%d %d\n",i, bookId);
+            j=0;
+            while(j<sizeof(bookName)-1)
+            {
+                bookNameList[i][j] = NULL;
+                bookAuthorList[i][j] = NULL;
+                bookCategoryList[i][j] = NULL;
+                j++;
+            }
+            bookQuantList[i] = 0;
+            return;
+        }
+    }
+    return;
+}
+
+void EditBook() // Edita elementos da Coluna
+{
+    int bookId;
+    printf("\nDigite o ID para Editar: ");
+    scanf("%d", &bookId);
+    if(strlen(bookNameList[bookId])!=0)
+    {
+        for(i=0; i<MAXLINE; i++)
+        {
+            if(i == bookId-1)
+            {
+                //Edita o nome do livro na matriz
+                j=0;
+                printf("\nDeseja alterar nome do livro? [s/S para sim || ENTER para pular]");
+                if((ch = getche()) != '\r')
+                {
+                    k=0;
+                    while(k<sizeof(bookName)-1) // Limpa o nome da linha
+                    {
+                        bookNameList[i][k] = NULL;
+                        k++;
+                    }
+                    printf("\nNome do livro: ");
+                    while(((ch = getche()) != '\r') && (j<sizeof(bookName)-1))
+                    {
+                        bookNameList[i][j] = ch;
+                        j++;
+                    }
+                }
+
+                //Edita o autor do livro na matriz
+                j = 0;
+                printf("\nDeseja alterar o autor do livro? [s/S para sim || ENTER para pular]");
+                if((ch = getche()) != '\r')
+                {
+                    k=0;
+                    while(k<sizeof(bookAuthor)-1) // Limpa o autor da linha
+                    {
+                        bookAuthorList[i][k] = NULL;
+                        k++;
+                    }
+                    printf("\nAutor do livro: ");
+                    while(((ch = getche()) != '\r') && (j<sizeof(bookName)-1))
+                    {
+                        bookAuthorList[i][j] = ch;
+                        j++;
+                    }
+                }
+
+                //Edita a categoria do livro na matriz
+                j = 0;
+                printf("\nDeseja alterar a categoria do livro? [s/S para sim || ENTER para pular]");
+                if((ch = getche()) != '\r')
+                {
+                    printf("\nAutor do livro: ");
+                    k = 0;
+                    while(k<sizeof(bookCategory)-1) // Limpa a categoria da linha
+                    {
+                        bookCategoryList[i][k] = NULL;
+                        k++;
+                    }
+                    while(((ch = getche()) != '\r') && (j<sizeof(bookName)-1))
+                    {
+                        bookAuthorList[i][j] = ch;
+                        j++;
+                    }
+                }
+
+                //Edita a quantidade de livros na matriz
+                printf("\nDeseja alterar a quantidade de livros? [s/S para sim || ENTER para pular]");
+                if((ch = getche()) != '\r')
+                {
+                    printf("\nQuantidade de livros: ");
+                    scanf("%d", &bookQuant);
+                    bookQuantList[i] = bookQuant;
+                }
+            }
+        }
+    }
+    else
+    {
+        PrintWithDelay("\nDigite um valor válido [Verifique na lista de livros]",100,"");
+        system("PAUSE");
+    }
+    return;
+}
 
 
 // Limpa o buffer de entrada, descartando todos os caracteres até a nova linha ou EOF
@@ -323,8 +542,13 @@ int main()
 {
     // Configurações Iniciais
     srand(time(NULL));                           // Inicializa a semente para geração de números aleatórios
-    setlocale(LC_CTYPE, "Portuguese_Brazil");    // Configura a acentuação e caracteres especiais em português
+    setlocale(LC_ALL,"Portuguese");            // Configura a acentuação e caracteres especiais em português
     SetColor(15);                                // Define a cor do texto para branco brilhante
+
+    while(1)
+    {
+        OperacionalSpaceMenu();
+    }
 
     return 0;    // Finaliza o programa
 }
