@@ -68,15 +68,34 @@ char ch;
 
 void OperacionalSpaceMenu()
 {
-    int intMenu;
-    printf("Escolha a função desejada\n\n"
+    int intMenu=-1, error=0;
+
+    while(intMenu > 5 || intMenu < 1)
+    {
+        if(error == 0)
+        {
+            printf("Escolha a função desejada\n\n"
            "1 - Listagem dos Livros\n"
-           "2 - Adicionar Livro\n"
-           "3 - Remover Livro\n"
-           "4 - Editar Livro\n"
-           "\n\n[Digite apenas números...]"
-          );
-    scanf("%d", &intMenu);
+           "2 - Buscar Livro\n"
+           "3 - Adicionar Livro\n"
+           "4 - Remover Livro\n"
+           "5 - Editar Livro\n"
+           "\n\n[Digite apenas números...]\n\nResposta: ");
+        }
+        else
+        {
+            printf("\n\nErro, Digite Novamente: ");
+        }
+        scanf("%d", &intMenu);
+        error++;
+        if (error>10)
+        {
+            printf("\n\nErro geral!");
+            Sleep(5000);
+            break;
+        }
+    }
+    error = 0;
     system("CLS");
 
     switch(intMenu)
@@ -85,18 +104,64 @@ void OperacionalSpaceMenu()
             ListAll();
             return;
         case 2:
-            AddBook();
+            SearchBook();
             return;
         case 3:
-            RemoveBook();
+            AddBook();
             return;
         case 4:
+            RemoveBook();
+            return;
+        case 5:
             EditBook();
             return;
         default:
             PrintWithDelay("\nOpção Inválida...",100,"");
             system("PAUSE");
             return;
+    }
+}
+
+//Buscar Livro
+void SearchBook()
+{
+    bool bookFound = false;  // Flag para indicar se algum livro foi encontrado
+    int c=0;
+    char l;
+    char name[100];
+
+    printf("Digite o nome do Livro que deseja buscar: ");
+    while (((l = getche()) != '\r') && (c<100))
+    {
+        name[c] = l;
+        c++;
+    }
+    name[c] = '\0';
+
+    PrintWithDelay("\n\nBuscando pelo Livro...", 80, "");
+
+    Sleep(1000);
+    system("cls");
+    printf("Correspondencias com %s", name);
+    // Verifica todos os livros cadastrados
+    for (int i = 0; i < 101; i++)
+    {
+        Sleep(1000);
+        if ((strcmp(bookNameList[i], name)) == 0)
+        {
+            // Exibe as informações do livro encontrado
+            printf("\n\nLivro Encontrado: \n");
+            printf("Nome: %s\n", bookNameList[i]);
+            printf("Autor: %s\n", bookAuthorList[i]);
+            printf("Categoria: %d\n", bookCategoryList[i]);
+            bookFound = true;  // Marca que ao menos um livro foi encontrado
+        }
+    }
+    printf("\n\n");
+    // Se nenhum livro foi encontrado, exibe uma mensagem
+    if (!bookFound)
+    {
+        printf("Nenhum livro correspondente foi encontrado.\n");
     }
 }
 
@@ -357,39 +422,6 @@ void SetColor(WORD color)
 
     return;
 }
-
-//Buscar Livro
-void SearchBook(char name[], char author[], int category)
-{
-    bool bookFound = false;  // Flag para indicar se algum livro foi encontrado
-
-    // Verifica todos os livros cadastrados
-    for (int i = 0; i < existinBooks; i++)
-    {
-        // Verifica as condições: nome do livro, autor e categoria podem ser fornecidos individualmente ou juntos.
-        bool nameMatch = (strlen(name) == 0 || strcmp(bookNameList[i], name) == 0);  // Verifica se o nome corresponde ou se foi ignorado
-        bool authorMatch = (strlen(author) == 0 || strcmp(bookAuthorList[i], author) == 0);  // Verifica se o autor corresponde ou se foi ignorado
-        bool categoryMatch = (category == -1 || bookCategoryList[i] == category);  // Verifica se a categoria corresponde ou se foi ignorada
-
-        // Se algum dos critérios for fornecido e corresponder, o livro é considerado um possível resultado
-        if (nameMatch && authorMatch && categoryMatch)
-        {
-            // Exibe as informações do livro encontrado
-            printf("Livro Encontrado: \n");
-            printf("Nome: %s\n", bookNameList[i]);
-            printf("Autor: %s\n", bookAuthorList[i]);
-            printf("Categoria: %d\n\n", bookCategoryList[i]);
-            bookFound = true;  // Marca que ao menos um livro foi encontrado
-        }
-    }
-
-    // Se nenhum livro foi encontrado, exibe uma mensagem
-    if (!bookFound)
-    {
-        printf("Nenhum livro correspondente foi encontrado.\n");
-    }
-}
-
 
 // Ver se o livro esta emprestado
 void CheckBorrower(char name[], char author[], int category)
