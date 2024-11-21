@@ -1154,7 +1154,7 @@ int main()
     setlocale(LC_ALL,"Portuguese");            // Configura a acentuação e caracteres especiais em português
     SetColor(15);                              // Define a cor do texto para branco brilhante
     AddInitialBooksAndUser();                  // Função importante, não mexa
-    //Start();                                   // Pode desativar essa  função caso queira uma inicialização mais rápida
+    Start();                                   // Pode desativar essa  função caso queira uma inicialização mais rápida
 
     while (Continue)
     {
